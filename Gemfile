@@ -47,5 +47,7 @@ end
 gem 'devise'
 gem 'cancancan', '~> 2.0'
 gem 'rolify'
+gem 'active_model_serializers'
+gem 'jwt'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

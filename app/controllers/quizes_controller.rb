@@ -5,12 +5,12 @@ class QuizesController < ApplicationController
   def index
     @quizes = Quize.all
 
-    render json: @quizes
+    json_response(@quizes)
   end
 
   # GET /quizes/1
   def show
-    render json: @quize
+    json_response(@quize)
   end
 
   # POST /quizes
@@ -18,18 +18,18 @@ class QuizesController < ApplicationController
     @quize = Quize.new(quize_params)
 
     if @quize.save
-      render json: @quize, status: :created, location: @quize
+       json_response(@quize)
     else
-      render json: @quize.errors, status: :unprocessable_entity
+       json_response(@quize.errors)
     end
   end
 
   # PATCH/PUT /quizes/1
   def update
     if @quize.update(quize_params)
-      render json: @quize
+      json_response(@quize)
     else
-      render json: @quize.errors, status: :unprocessable_entity
+      json_response(@quize.errors)
     end
   end
 
@@ -46,6 +46,8 @@ class QuizesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def quize_params
-      params.fetch(:quize, {})
+      # params.fetch(:quize, {:name, :user_id, question_attributes: [:id,:name,:_destroy, answers_attributes: [:id,:name,:_destroy, :is_correct]]})
+      params.require(:quize).permit(:name, :user_id, question_attributes: [:id,:name, :answer,:_destroy, answers_attributes: [:id,:name,:_destroy, :is_correct]] )
     end
 end
+# .permit(:name, :user_id, questions_attributes: [:id,:name, :answer,:_destroy, options_attributes: [:id,:name,:_destroy, :is_correct]] )
